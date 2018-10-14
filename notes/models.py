@@ -6,7 +6,9 @@ from django.urls import reverse
 
 class Note(models.Model):
     """
-    This class contains the parameters that are used to build the model.
+    Model contains four fields. Field `title` - for note title. Field `content` - for note text.
+    Field `date_posted` - when note created or modifaed. Field `unique_words_count` - the number
+    of unique words in a note to sort notes
     """
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -14,9 +16,6 @@ class Note(models.Model):
     unique_words_count = models.IntegerField()
 
     def __str__(self):
-        """
-        This function displays the model name.
-        """
         return self.title
 
     def get_absolute_url(self):

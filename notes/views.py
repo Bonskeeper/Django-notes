@@ -8,14 +8,14 @@ from .forms import NoteForm
 
 def about(request):
     """
-    This view displays the application information.
+    Display the application information.
     """
     return render(request, 'notes/about.html', {'title': 'About'})
 
 
 class NoteListView(ListView, FormView):
     """
-    This view displays a form for notes as well as notes sorted by unique words.
+    Display a form for notes as well as notes sorted by unique words.
     """
     model = Note
     form_class = NoteForm
@@ -33,14 +33,14 @@ class NoteListView(ListView, FormView):
 
 class NoteDetailView(DetailView):
     """
-    This view displays the details of the selected note..
+    Display the details of the selected note..
     """
     model = Note
 
 
 class NoteUpdateView(UpdateView):
     """
-    This view displays a form to update the selected note.
+    Display update selected note form.
     """
     model = Note
     fields = ['title', 'content']
@@ -52,7 +52,7 @@ class NoteUpdateView(UpdateView):
 
 class NoteDeletelView(DeleteView):
     """
-    This view displays a confirmation message to delete the selected note.
+    Display confirmation message to delete selected note.
     """
     model = Note
     success_url = '/'

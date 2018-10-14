@@ -6,7 +6,7 @@ from .models import Note
 
 class NoteForm(ModelForm):
     """
-    This class contain class with instructions that are used to build the form in template.
+    Build form from Note model. Allow editing of `title` and `content` fields.
     """
     class Meta:
         model = Note

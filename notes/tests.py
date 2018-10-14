@@ -1,19 +1,45 @@
 from django.test import TestCase
+from django.test.client import RequestFactory
+
 from .models import Note
+from .forms import NoteForm
+from .views import NoteListView
 
 
 class NoteModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        # Set up non-modified objects used by all test methods
-        Note.objects.create(title='this is test one note', content='this is my first test note', unique_words_count=6)
-        Note.objects.create(title='this is test second note',
-                            content='this is my second test note with more unique words', unique_words_count=10)
+    def setUp(self):
+        self.factory = RequestFactory()
+        for number in range(5):
+            Note.objects.create(title='Test note number {}'.format(number), content='Test note with six unique words',
+                                unique_words_count=6)
 
-    def test_count_unique_wordsl(self):
-        note_one = Note.objects.get(id=1)
-        note_two = Note.objects.get(id=2)
-        field_unique_words_count_note_one = note_one.unique_words_count
-        field_unique_words_count_note_two = note_two.unique_words_count
-        test_case = field_unique_words_count_note_one < field_unique_words_count_note_two
-        self.assertTrue(test_case)
+    def test_results(self):
+        """
+        In `setUp` we create 5 note objects. We have a pagination of three notes
+        on the page. By requesting the second page we must get status code 200
+        """
+        request = self.factory.get("/?page=2")
+        response = NoteListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_valid_form(self):
+        """
+        Form validation test
+        """
+        data = {
+            'title':'this is test one note',
+            'content': 'this is my first test note',
+        }
+        form = NoteForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        """
+        Negative form validation test
+        """
+        data = {
+            'title':'this is test two note',
+            'content': '',
+        }
+        form = NoteForm(data=data)
+        self.assertFalse(form.is_valid())
