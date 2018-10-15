@@ -25,7 +25,7 @@ SECRET_KEY = '2zgc$wrfu*239o0@5lpk)3k7%gep0j^w-sduaub)21s6%@sa-e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ancient-scrubland-66417.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
